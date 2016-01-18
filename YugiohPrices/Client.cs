@@ -45,26 +45,66 @@ namespace YugiohPrices
 
     public struct CardPrices
     {
+        /// <summary>
+        /// The card these prices belong to.
+        /// </summary>
         public Card Card;
+
+        /// <summary>
+        /// The name of the set these prices came from.
+        /// </summary>
         [JsonProperty("name")]
         public string SetName;
+
+        /// <summary>
+        /// Print tag assosciated with the card from the set.
+        /// </summary>
         [JsonProperty("print_tag")]
         public string PrintTag;
+
+        /// <summary>
+        /// Rarity of the card.
+        /// </summary>
         [JsonProperty("rarity")]
         public string Rarity;
+
+        /// <summary>
+        /// Unknown yet.
+        /// </summary>
         [JsonProperty("listings")]
         public string[] Listings;
 
+        /// <summary>
+        /// An object containing the price data of this card.
+        /// </summary>
         public PriceData PriceData;
     }
     public struct PriceData
     {
+        /// <summary>
+        /// The highest price, in USD.
+        /// Use .ToString("C") to automatically format to money.
+        /// </summary>
         [JsonProperty("high")]
         public decimal HighPrice;
+
+        /// <summary>
+        /// The average price of the card, in USD.
+        /// Use .ToString("C") to automatically format to money.
+        /// </summary>
         [JsonProperty("average")]
         public decimal AveragePrice;
+
+        /// <summary>
+        /// The lowest price of the card. If you paid this, you're lucky. Of course, in USD.
+        /// Use .ToString("C") to automatically format to money.
+        /// </summary>
         [JsonProperty("low")]
         public decimal LowPrice;
+
+        /// <summary>
+        /// The timestamp assosciated with the time the listing was last updated.
+        /// </summary>
         [JsonProperty("updated_at")]
         public DateTime LastUpdated;
 
@@ -86,14 +126,34 @@ namespace YugiohPrices
 
     internal class Endpoints
     {
+        /// <summary>
+        /// Base URL
+        /// </summary>
         public static string BaseURL = "http://yugiohprices.com/api/";
+
+        /// <summary>
+        /// For retrieving card data like name, description, attribute, etc.
+        /// </summary>
         public static string CardData = "card_data/";
+
+        /// <summary>
+        /// For retrieving card prices.
+        /// </summary>
         public static string CardPrices = "get_card_prices/";
+
+        /// <summary>
+        /// For retrieving the card's image.
+        /// </summary>
         public static string CardImage = "card_image/";
     }
 
     internal class WebWrapper
     {
+        /// <summary>
+        /// performs a get request
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public static async Task<string> Get(string url)
         {
             using (var httpClient = new HttpClient())
@@ -105,6 +165,11 @@ namespace YugiohPrices
             }
         }
 
+        /// <summary>
+        /// Internally performs a get request and returns an image.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public static async Task<Image> GetImage(string url)
         {
             using (var wc = new WebClient())
@@ -116,10 +181,19 @@ namespace YugiohPrices
         }
     }
 
+    /// <summary>
+    /// A wrapper around the http://yugiohprices.com/ database.
+    /// </summary>
     public class YugiohPricesSearcher
     {
         public YugiohPricesSearcher() { }
 
+        /// <summary>
+        /// Returns a Card object found by its name.
+        /// </summary>
+        /// <param name="name">The, case sensitive, name of the card to retrieve.</param>
+        /// <returns>A card object. What else did you expect?</returns>
+        /// <exception cref="HttpRequestException">If the 'status' of the request is not success, this exception will throw with the message from the Json as the exception's message.</exception>
         public async Task<Card> GetCardByName(string name)
         {
             JObject message = JObject.Parse(await WebWrapper.Get(Endpoints.BaseURL + Endpoints.CardData + name).ConfigureAwait(false));
@@ -148,6 +222,12 @@ namespace YugiohPrices
             return nil;
         }
 
+        /// <summary>
+        /// Gets *all* of the card's prices.
+        /// </summary>
+        /// <param name="name">The case sensitive name of the card.</param>
+        /// <returns>An array of CardPrices objects. Remember: CardPrices has a field called Card that contains the Card object so you don't have to perform a GetCardByName also.</returns>
+        /// <exception cref="HttpRequestException">If the 'status' of the request is not success, this exception will throw with the message from the Json as the exception's message.</exception>
         public async Task<CardPrices[]> GetAllCardPricesByName(string name)
         {
             JObject message = JObject.Parse(await WebWrapper.Get(Endpoints.BaseURL + Endpoints.CardPrices + name).ConfigureAwait(false));
@@ -179,6 +259,12 @@ namespace YugiohPrices
             return null;
         }
 
+        /// <summary>
+        /// Retrieves the first card price assosciated with the card.
+        /// </summary>
+        /// <param name="name">The case sensitive name of the card to base the search off of.</param>
+        /// <returns>A CardPrices object.</returns>
+        /// <exception cref="HttpRequestException">If the 'status' of the request is not success, this exception will throw with the message from the Json as the exception's message.</exception>
         public async Task<CardPrices> GetCardPricesByName(string name)
         {
             JObject message = JObject.Parse(await WebWrapper.Get(Endpoints.BaseURL + Endpoints.CardPrices + name).ConfigureAwait(false));
