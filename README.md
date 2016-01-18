@@ -3,6 +3,7 @@ A C# based wrapper for the yugiohprices.com API.
 
 # Dependencies
 `Newtonsoft.Json` >= 8.0
+
 `.Net Framework` >= 4.5
 
 # Quick How-To
