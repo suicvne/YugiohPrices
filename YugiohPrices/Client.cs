@@ -196,7 +196,8 @@ namespace YugiohPrices
         /// <exception cref="HttpRequestException">If the 'status' of the request is not success, this exception will throw with the message from the Json as the exception's message.</exception>
         public async Task<Card> GetCardByName(string name)
         {
-            JObject message = JObject.Parse(await WebWrapper.Get(Endpoints.BaseURL + Endpoints.CardData + name).ConfigureAwait(false));
+            string rawJson = await WebWrapper.Get(Endpoints.BaseURL + Endpoints.CardData + name).ConfigureAwait(false);
+            JObject message = JObject.Parse(rawJson);
             if(message["status"].ToString() == "success")
             {
                 Card c = new Card();
@@ -214,7 +215,7 @@ namespace YugiohPrices
             }
             else
             {
-                throw new HttpRequestException(message["message"].ToString());
+                throw new HttpRequestException(message["message"].ToString() != null ? message["message"].ToString() : "Couldn't find specified card.");
             }
 
             Card nil = new Card();
@@ -254,7 +255,7 @@ namespace YugiohPrices
             }
             else
             {
-                throw new HttpRequestException(message["message"].ToString());
+                throw new HttpRequestException(message["message"].ToString() != null ? message["message"].ToString() : "Couldn't get the card's prices.");
             }
             return null;
         }
@@ -288,7 +289,7 @@ namespace YugiohPrices
             }
             else
             {
-                throw new HttpRequestException(message["message"].ToString());
+                throw new HttpRequestException(message["message"].ToString() != null ? message["message"].ToString() : "Couldn't get the card's prices.");
             }
         }
     }

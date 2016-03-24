@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25008.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YugiohPrices", "YugiohPrices\YugiohPrices.csproj", "{42D191A3-37AA-4ADB-83ED-BB324AA78ED2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YugiohPrices-Tester", "ConsoleApplication1\YugiohPrices-Tester.csproj", "{F4A359E5-4A7E-4A09-AD71-1A8E7225231A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{42D191A3-37AA-4ADB-83ED-BB324AA78ED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42D191A3-37AA-4ADB-83ED-BB324AA78ED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42D191A3-37AA-4ADB-83ED-BB324AA78ED2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4A359E5-4A7E-4A09-AD71-1A8E7225231A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4A359E5-4A7E-4A09-AD71-1A8E7225231A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4A359E5-4A7E-4A09-AD71-1A8E7225231A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4A359E5-4A7E-4A09-AD71-1A8E7225231A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
